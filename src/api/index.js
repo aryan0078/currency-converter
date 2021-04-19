@@ -1,7 +1,7 @@
 export const converter = async (data) => {
   var { from, to } = data;
   var res = await fetch(
-    "https://v6.exchangerate-api.com/v6/5efce7dd14df1250b1d936fb/pair/" +
+    "https://v6.exchangerate-api.com/v6/89c70a233a2c057b134f316f/pair/" +
       from +
       "/" +
       to

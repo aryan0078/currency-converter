@@ -1,5 +1,5 @@
 import "./App.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { converter } from "./api/index";
 import Select from "react-select";
 function App() {
@@ -17,8 +17,27 @@ function App() {
   ];
   var [from, setfrom] = useState(values[0]);
   var [to, setto] = useState(values[1]);
-  const [fromValue, setFromValue] = useState(0);
+  const [all, setall] = useState([]);
+  const [fromValue, setFromValue] = useState(1);
   const [toValue, setToValue] = useState(0);
+  useEffect(async () => {
+    setToValue(await converter({ from: from.value, to: to.value }));
+    if (from.value == to.value) {
+      var _ = [];
+
+      for (let index = 0; index < values.length; index++) {
+        const element = values[index];
+        _.push({
+          currency: element.label,
+          value:
+            fromValue *
+            (await converter({ from: from.value, to: element.value })),
+        });
+      }
+
+      setall(_);
+    }
+  });
 
   return (
     <div className="App">
@@ -89,10 +108,20 @@ function App() {
                 toValue * (await converter({ from: from.value, to: e.value }))
               );
             }}
-            defaultValue={values[0]}
+            defaultValue={values[1]}
           ></Select>
         </div>
       </div>
+      {from.value === to.value ? (
+        <div>
+          {all.map((elment) => (
+            <p>
+              {fromValue} {from.label} is equals to {elment.value}{" "}
+              {elment.currency}
+            </p>
+          ))}
+        </div>
+      ) : null}
     </div>
   );
 }
