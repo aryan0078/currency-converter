@@ -48,3 +48,10 @@ h4 {
     width: 80%;
   }
 }
+.loading{
+  width: 50px;
+  height: 50px;
+  background-image: url('https://upload.wikimedia.org/wikipedia/commons/c/c7/Loading_2.gif');
+  background-repeat: no-repeat;
+  background-size: contain;
+}

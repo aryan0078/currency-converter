@@ -20,7 +20,9 @@ function App() {
   const [all, setall] = useState([]);
   const [fromValue, setFromValue] = useState(1);
   const [toValue, setToValue] = useState(0);
+  const [Loading, setLoading] = useState(false)
   useEffect(async () => {
+    setLoading(true)
     setToValue(await converter({ from: from.value, to: to.value }));
     if (from.value == to.value) {
       var _ = [];
@@ -37,7 +39,8 @@ function App() {
 
       setall(_);
     }
-  });
+    setLoading(false)
+  },[from,to]);
 
   return (
     <div className="App">
@@ -122,6 +125,7 @@ function App() {
           ))}
         </div>
       ) : null}
+      {Loading?<div className="loading"></div>:null}
     </div>
   );
 }
